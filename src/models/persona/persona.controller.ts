@@ -1,0 +1,53 @@
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { PersonaService } from './persona.service';
+import { CreatePersonaDto } from './dto/create-persona.dto';
+import { UpdatePersonaDto } from './dto/update-persona.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { ReadPersonaDto } from './dto/read-persona.dto';
+import { plainToClass } from 'class-transformer';
+
+@ApiTags('personas')
+@Controller('personas')
+export class PersonaController {
+  constructor(private readonly personaService: PersonaService) {}
+  
+  @Post()
+  async create(@Body() createPersonaDto: CreatePersonaDto): Promise<ReadPersonaDto> {
+    const response = await this.personaService.create(createPersonaDto);
+    return plainToClass(ReadPersonaDto, response);
+  }
+
+  @Get()
+  async findAll(): Promise<ReadPersonaDto[]> {
+    const response = await this.personaService.findAll({
+      relations: ['domicilio'],
+    });
+    return response.map((data) => plainToClass(ReadPersonaDto, data));
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
+    const response = await this.personaService.findOne(id);
+    return plainToClass(ReadPersonaDto, response);
+  }
+
+  @Get(':id/domicilio')
+  async findOneDomicilio(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
+    const response = await this.personaService.findOne(id,{
+      relations: ['domicilio'],
+    });
+    return plainToClass(ReadPersonaDto, response);
+  }
+
+  @Put(':id')
+  async update(@Param('id', ParseUUIDPipe) id: string, @Body() updatePersonaDto: UpdatePersonaDto): Promise<ReadPersonaDto> {
+    const response = await this.personaService.update(id, updatePersonaDto);
+    return plainToClass(ReadPersonaDto, response);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
+    const response = await this.personaService.remove(id);
+    return plainToClass(ReadPersonaDto, response);
+  }
+}
