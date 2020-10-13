@@ -39,7 +39,7 @@ export class Persona extends EntityBase implements IPersona{
   @OneToOne(
     () => Domicilio,
     (domicilio) => domicilio.persona,
-    {cascade: true},
+    {cascade: ["insert", "update", "soft-remove", "recover"]},
   )
   @JoinColumn({name: 'domicilio_id'})
   domicilio: Domicilio;

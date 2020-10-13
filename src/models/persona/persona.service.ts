@@ -10,6 +10,8 @@ export class PersonaService extends ServiceCrud<Persona>{
     @InjectRepository(Persona)
     readonly  repo: Repository<Persona>,
   ){
-    super(repo)
+    super(repo, {
+      embedded: ['domicilio']
+    })
   }
 }

@@ -19,9 +19,7 @@ export class PersonaController {
 
   @Get()
   async findAll(): Promise<ReadPersonaDto[]> {
-    const response = await this.personaService.findAll({
-      relations: ['domicilio'],
-    });
+    const response = await this.personaService.findAll();
     return response.map((data) => plainToClass(ReadPersonaDto, data));
   }
 
@@ -33,9 +31,7 @@ export class PersonaController {
 
   @Get(':id/domicilio')
   async findOneDomicilio(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
-    const response = await this.personaService.findOne(id,{
-      relations: ['domicilio'],
-    });
+    const response = await this.personaService.findOne(id);
     return plainToClass(ReadPersonaDto, response);
   }
 
@@ -48,6 +44,12 @@ export class PersonaController {
   @Delete(':id')
   async remove(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
     const response = await this.personaService.remove(id);
+    return plainToClass(ReadPersonaDto, response);
+  }
+
+  @Delete(':id/restore')
+  async restore(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
+    const response = await this.personaService.restore(id);
     return plainToClass(ReadPersonaDto, response);
   }
 }

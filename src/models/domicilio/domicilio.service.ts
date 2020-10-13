@@ -10,6 +10,8 @@ export class DomicilioService extends ServiceCrud<Domicilio>{
     @InjectRepository(Domicilio)
     readonly  repo: Repository<Domicilio>,
   ){
-    super(repo)
+    super(repo, {
+      embedded: []
+    })
   }
 }
