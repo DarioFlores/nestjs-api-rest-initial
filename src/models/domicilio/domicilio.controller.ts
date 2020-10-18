@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { DomicilioService } from './domicilio.service';
 import { CreateDomicilioDto } from './dto/create-domicilio.dto';
 import { UpdateDomicilioDto } from './dto/update-domicilio.dto';
@@ -24,19 +24,19 @@ export class DomicilioController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<ReadDomicilioDto> {
-    const response = await this.domicilioService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<ReadDomicilioDto> {
+    const response = await this.domicilioService.findById(id);
     return plainToClass(ReadDomicilioDto, response);
   }
 
   @Put(':id')
-  async update(@Param('id', ParseUUIDPipe) id: string, @Body() updatePersonaDto: UpdateDomicilioDto): Promise<ReadDomicilioDto> {
+  async update(@Param('id') id: string, @Body() updatePersonaDto: UpdateDomicilioDto): Promise<ReadDomicilioDto> {
     const response = await this.domicilioService.update(id, updatePersonaDto);
     return plainToClass(ReadDomicilioDto, response);
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<ReadDomicilioDto> {
+  async remove(@Param('id') id: string): Promise<ReadDomicilioDto> {
     const response = await this.domicilioService.remove(id);
     return plainToClass(ReadDomicilioDto, response);
   }

@@ -6,7 +6,7 @@ import { ReadDomicilioDto } from '../../domicilio/dto/read-domicilio.dto';
 @Exclude()
 export class ReadPersonaDto implements IPersona{
   @Expose()
-  id: string;
+  _id: string;
 
   @Expose()
   nombre: string;

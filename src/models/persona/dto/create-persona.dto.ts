@@ -1,9 +1,7 @@
 
-import { IsDateString, IsDefined, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength, ValidateNested } from 'class-validator';
+import { IsDateString, IsDefined, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { SEXO } from '../../../utils/enum.util';
 import { IPersona } from '../interfaces/persona.interface';
-import { AsignarDomicilioDto } from '../../domicilio/dto/asignar-domicilio.dto';
-import { Type } from 'class-transformer';
 
 export class CreatePersonaDto implements IPersona{
   @IsDefined()
@@ -46,8 +44,8 @@ export class CreatePersonaDto implements IPersona{
   @IsEnum(SEXO)
   sexo?: SEXO;
 
-  @IsOptional()
-  @ValidateNested({each: true})
-  @Type(() => AsignarDomicilioDto)
-  domicilio?: AsignarDomicilioDto;
+  // @IsOptional()
+  // @ValidateNested({each: true})
+  // @Type(() => AsignarDomicilioDto)
+  // domicilio?: AsignarDomicilioDto;
 }

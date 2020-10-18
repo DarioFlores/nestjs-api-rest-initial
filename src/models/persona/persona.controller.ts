@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { PersonaService } from './persona.service';
 import { CreatePersonaDto } from './dto/create-persona.dto';
 import { UpdatePersonaDto } from './dto/update-persona.dto';
@@ -24,32 +24,32 @@ export class PersonaController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
-    const response = await this.personaService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<ReadPersonaDto> {
+    const response = await this.personaService.findById(id);
     return plainToClass(ReadPersonaDto, response);
   }
 
   @Get(':id/domicilio')
-  async findOneDomicilio(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
-    const response = await this.personaService.findOne(id);
+  async findOneDomicilio(@Param('id') id: string): Promise<ReadPersonaDto> {
+    const response = await this.personaService.findById(id);
     return plainToClass(ReadPersonaDto, response);
   }
 
   @Put(':id')
-  async update(@Param('id', ParseUUIDPipe) id: string, @Body() updatePersonaDto: UpdatePersonaDto): Promise<ReadPersonaDto> {
+  async update(@Param('id') id: string, @Body() updatePersonaDto: UpdatePersonaDto): Promise<ReadPersonaDto> {
     const response = await this.personaService.update(id, updatePersonaDto);
     return plainToClass(ReadPersonaDto, response);
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
+  async remove(@Param('id') id: string): Promise<ReadPersonaDto> {
     const response = await this.personaService.remove(id);
     return plainToClass(ReadPersonaDto, response);
   }
 
-  @Delete(':id/restore')
-  async restore(@Param('id', ParseUUIDPipe) id: string): Promise<ReadPersonaDto> {
-    const response = await this.personaService.restore(id);
-    return plainToClass(ReadPersonaDto, response);
-  }
+  // @Delete(':id/restore')
+  // async restore(@Param('id') id: string): Promise<ReadPersonaDto> {
+  //   const response = await this.personaService.restore(id);
+  //   return plainToClass(ReadPersonaDto, response);
+  // }
 }

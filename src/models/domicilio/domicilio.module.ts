@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DomicilioService } from './domicilio.service';
 import { DomicilioController } from './domicilio.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Domicilio } from './entities/domicilio.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { DomicilioSchema, Domicilio } from './schema/domicilio.schema';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Domicilio])
+    MongooseModule.forFeature([{ name: Domicilio.name, schema: DomicilioSchema }])
   ],
-  exports: [TypeOrmModule, DomicilioService],
+  exports: [MongooseModule, DomicilioService],
   controllers: [DomicilioController],
   providers: [DomicilioService]
 })

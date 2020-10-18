@@ -1,17 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Domicilio } from './entities/domicilio.entity';
-import { Repository } from 'typeorm';
-import { ServiceCrud } from '../../common/crud/services/service-crud.common';
+import { ServiceCrud } from '../../common/services/service-crud.common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Domicilio, DomicilioDocument } from './schema/domicilio.schema';
 
 @Injectable()
-export class DomicilioService extends ServiceCrud<Domicilio>{
+export class DomicilioService extends ServiceCrud<DomicilioDocument>{
   constructor(
-    @InjectRepository(Domicilio)
-    readonly  repo: Repository<Domicilio>,
+    @InjectModel(Domicilio.name)
+    readonly  repo: Model<DomicilioDocument>,
   ){
-    super(repo, {
-      embedded: []
-    })
+    super(repo)
   }
 }

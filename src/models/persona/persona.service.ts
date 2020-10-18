@@ -1,17 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Persona } from './entities/persona.entity';
-import { Repository } from 'typeorm';
-import { ServiceCrud } from '../../common/crud/services/service-crud.common';
+import { Persona, PersonaDocument } from './schema/persona.schema';
+import { ServiceCrud } from '../../common/services/service-crud.common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
-export class PersonaService extends ServiceCrud<Persona>{
+export class PersonaService extends ServiceCrud<PersonaDocument>{
   constructor(
-    @InjectRepository(Persona)
-    readonly  repo: Repository<Persona>,
+    @InjectModel(Persona.name)
+    readonly model: Model<PersonaDocument>,
   ){
-    super(repo, {
-      embedded: ['domicilio']
-    })
+    super(model)
   }
 }
