@@ -13,7 +13,6 @@ export abstract class ServiceCrud<DocumentModel extends Document>{
         ...createDto,
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: new Date()
       });
     } catch (error) {
       throw new InternalServerErrorException(error.message, MESSAGES_ERROR.DB.ERROR);

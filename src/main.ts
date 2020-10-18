@@ -4,9 +4,12 @@ import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {ValidationPipe} from '@nestjs/common';
 import {NestExpressApplication} from '@nestjs/platform-express';
 import { ResponseInterceptor } from './common/interceptors/response.interseptor';
+import { EnvironmentsService } from './environments/environments.service';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Validations
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -15,8 +18,15 @@ async function bootstrap(): Promise<void> {
     }),
   );
   app.enableCors();
+
+  // Interceptor Response
   app.useGlobalInterceptors(new ResponseInterceptor());
-  const PORT = process.env.PORT || 3000;
+
+  // Config
+  const envService = app.get(EnvironmentsService);
+  const port = envService.NODE_PORT;
+
+  // Documentation
   const options = new DocumentBuilder()
     .setTitle('Ancasti-API')
     .setDescription('Documentacion de Ancasti-API de PensarSoft')
@@ -30,6 +40,6 @@ async function bootstrap(): Promise<void> {
     },
   });
 
-  await app.listen(PORT);
+  await app.listen(port);
 }
 bootstrap();

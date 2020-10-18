@@ -8,7 +8,8 @@ import { Model } from 'mongoose';
 export class PersonaService extends ServiceCrud<PersonaDocument>{
   constructor(
     @InjectModel(Persona.name)
-    readonly model: Model<PersonaDocument>,
+    private readonly model: Model<PersonaDocument>,
+
   ){
     super(model)
   }
