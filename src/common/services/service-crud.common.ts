@@ -5,7 +5,8 @@ import { Model, Document, FilterQuery, CreateQuery, MongooseUpdateQuery, QueryFi
 export abstract class ServiceCrud<DocumentModel extends Document>{
   constructor(
     private modelo: Model<DocumentModel>,
-    private sort: any
+    private populate: string[],
+    private sort: any,
   ) {}
 
   async create(createDto: CreateQuery<DocumentModel>): Promise<DocumentModel> {
@@ -20,28 +21,31 @@ export abstract class ServiceCrud<DocumentModel extends Document>{
     }
   }
 
-  async findAll(conditions?: FilterQuery<DocumentModel>, populate: string[] = []): Promise<DocumentModel[]> {
+  async findAll(conditions?: FilterQuery<DocumentModel>, populate?: string[]): Promise<DocumentModel[]> {
+    const populateOptions = populate || this.populate;
     try {
-      return await this.modelo.find(conditions).populate(populate).sort(this.sort);
+      return await this.modelo.find(conditions).populate(populateOptions).sort(this.sort);
     } catch (error) {
       throw new InternalServerErrorException(error.message, MESSAGES_ERROR.DB.ERROR);
     }
   }
 
-  async findOne(conditions?: FilterQuery<DocumentModel>): Promise<DocumentModel> {
+  async findOne(conditions?: FilterQuery<DocumentModel>, populate?: string[]): Promise<DocumentModel> {
+    const populateOptions = populate || this.populate;
     let modelo: DocumentModel;
     try {
-      modelo = await this.modelo.findOne(conditions);
+      modelo = await this.modelo.findOne(conditions).populate(populateOptions).sort(this.sort);
     } catch (error) {
       throw new InternalServerErrorException(error.message, MESSAGES_ERROR.DB.ERROR);
     }
     return modelo;
   }
 
-  async findById(id: string, conditions?: FilterQuery<DocumentModel>): Promise<DocumentModel> {
+  async findById(id: string, conditions?: FilterQuery<DocumentModel>, populate?: string[]): Promise<DocumentModel> {
+    const populateOptions = populate || this.populate;
     let modelo: DocumentModel;
     try {
-      modelo = await this.modelo.findById(id, conditions);
+      modelo = await this.modelo.findById(id, conditions).populate(populateOptions).sort(this.sort);
     } catch (error) {
       throw new InternalServerErrorException(error.message, MESSAGES_ERROR.DB.ERROR);
     }

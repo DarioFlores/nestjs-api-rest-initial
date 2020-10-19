@@ -10,6 +10,6 @@ export class DomicilioService extends ServiceCrud<DomicilioDocument>{
     @InjectModel(Domicilio.name)
     readonly  repo: Model<DomicilioDocument>,
   ){
-    super(repo, { calle: 'asc', nroCalle: 'desc'})
+    super(repo, [], { calle: 'asc', nroCalle: 'desc'})
   }
 }

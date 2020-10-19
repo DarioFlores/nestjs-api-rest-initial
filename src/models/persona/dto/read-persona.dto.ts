@@ -31,5 +31,5 @@ export class ReadPersonaDto implements IPersona{
 
   @Type(() => ReadDomicilioDto)
   @Expose()
-  domicilio: ReadDomicilioDto;
+  domicilio?: ReadDomicilioDto;
 }

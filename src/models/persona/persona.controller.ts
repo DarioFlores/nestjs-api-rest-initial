@@ -19,16 +19,13 @@ export class PersonaController {
 
   @Get()
   async findAll(): Promise<ReadPersonaDto[]> {
-    const response = await this.personaService.findAll();
+    const response = await this.personaService.findAll({},[]);
     return response.map((data) => plainToClass(ReadPersonaDto, data));
   }
 
   @Get('domicilios')
   async findAllDomicilio(): Promise<ReadPersonaDto[]> {
-    const response = await this.personaService.findAll(
-      {},
-      ['domicilio']
-    );
+    const response = await this.personaService.findAll();
     return response.map((data) => plainToClass(ReadPersonaDto, data));
   }
 

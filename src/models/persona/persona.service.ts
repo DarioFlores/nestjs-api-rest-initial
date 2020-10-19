@@ -10,6 +10,6 @@ export class PersonaService extends ServiceCrud<PersonaDocument>{
     @InjectModel(Persona.name)
     private readonly model: Model<PersonaDocument>,
   ){
-    super(model, { apellido: 'desc', nombre: 'asc'})
+    super(model, ['domicilio'], { apellido: 'desc', nombre: 'asc'})
   }
 }
