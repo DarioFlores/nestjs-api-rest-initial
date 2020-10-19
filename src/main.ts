@@ -28,8 +28,8 @@ async function bootstrap(): Promise<void> {
 
   // Documentation
   const options = new DocumentBuilder()
-    .setTitle('Ancasti-API')
-    .setDescription('Documentacion de Ancasti-API de PensarSoft')
+    .setTitle('Ejemplo-API')
+    .setDescription('Documentacion de Ejemplo-API')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);

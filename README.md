@@ -34,6 +34,11 @@
 $ npm install
 ```
 
+## Environments
+
+Agregar archivo '.development.env' con la estructura que tiene '.example.env'
+Recomendacion: 
+    Copia '.example.env' y pegalo en la raiz del proyecto con el nombre '.development.env'
 ## Running the app
 
 ```bash
