@@ -4,7 +4,8 @@ import { Model, Document, FilterQuery, CreateQuery, MongooseUpdateQuery, QueryFi
 
 export abstract class ServiceCrud<DocumentModel extends Document>{
   constructor(
-    private modelo: Model<DocumentModel>
+    private modelo: Model<DocumentModel>,
+    private sort: any
   ) {}
 
   async create(createDto: CreateQuery<DocumentModel>): Promise<DocumentModel> {
@@ -19,9 +20,9 @@ export abstract class ServiceCrud<DocumentModel extends Document>{
     }
   }
 
-  async findAll(conditions?: FilterQuery<DocumentModel>): Promise<DocumentModel[]> {
+  async findAll(conditions?: FilterQuery<DocumentModel>, populate: string[] = []): Promise<DocumentModel[]> {
     try {
-      return await this.modelo.find(conditions);
+      return await this.modelo.find(conditions).populate(populate).sort(this.sort);
     } catch (error) {
       throw new InternalServerErrorException(error.message, MESSAGES_ERROR.DB.ERROR);
     }

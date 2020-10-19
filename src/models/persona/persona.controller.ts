@@ -23,6 +23,15 @@ export class PersonaController {
     return response.map((data) => plainToClass(ReadPersonaDto, data));
   }
 
+  @Get('domicilios')
+  async findAllDomicilio(): Promise<ReadPersonaDto[]> {
+    const response = await this.personaService.findAll(
+      {},
+      ['domicilio']
+    );
+    return response.map((data) => plainToClass(ReadPersonaDto, data));
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<ReadPersonaDto> {
     const response = await this.personaService.findById(id);

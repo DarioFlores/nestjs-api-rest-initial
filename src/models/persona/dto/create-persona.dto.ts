@@ -1,5 +1,6 @@
 
-import { IsDateString, IsDefined, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsDateString, IsDefined, IsEmail, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { SEXO } from '../../../utils/enum.util';
 import { IPersona } from '../interfaces/persona.interface';
 
@@ -44,8 +45,11 @@ export class CreatePersonaDto implements IPersona{
   @IsEnum(SEXO)
   sexo?: SEXO;
 
-  // @IsOptional()
-  // @ValidateNested({each: true})
-  // @Type(() => AsignarDomicilioDto)
-  // domicilio?: AsignarDomicilioDto;
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({ 
+    type: 'ObjectId', 
+    example: '5f8d7dc39df393315052c585'
+  })
+  domicilio?: string;
 }

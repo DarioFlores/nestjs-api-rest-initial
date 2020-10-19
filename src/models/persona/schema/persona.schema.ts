@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { IPersona } from '../interfaces/persona.interface';
+import { Domicilio } from '../../domicilio/schema/domicilio.schema';
 
 export type PersonaDocument = Persona & Document;
 
@@ -28,6 +29,8 @@ export class Persona implements IPersona{
   @Prop()
   sexo?: string;
 
+  @Prop({ type: Types.ObjectId , ref: Domicilio.name })
+  domicilio?: string
 }
 
 export const PersonaSchema = SchemaFactory.createForClass(Persona);
